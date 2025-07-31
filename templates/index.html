@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <title>書香小站 BookStation</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 30px;
+        background-color: #f9f9f9;
+      }
+      .section {
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 5px #ccc;
+      }
+      h2 {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+      }
+      pre {
+        background: #eee;
+        padding: 10px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>📘 書香小站 BookStation</h1>
+
+    <div class="section">
+      <h2>✅ API 狀態檢查</h2>
+      <p>伺服器目前狀態良好。</p>
+      <p>你可以使用 <strong>Postman</strong> 對以下 API 發送請求：</p>
+      <ul>
+        <li>POST <code>/register</code>：註冊帳號</li>
+        <li>POST <code>/login</code>：登入（回傳 token）</li>
+        <li>GET <code>/profile</code>：查看個人資料（需登入）</li>
+        <li>GET <code>/books?page=1&limit=10</code>：查詢書籍（支援分頁）</li>
+        <li>
+          POST <code>/books</code>：新增書籍（含封面）<strong>限管理員</strong>
+        </li>
+      </ul>
+      <p>請使用 <code>Bearer Token</code> 驗證授權。</p>
+    </div>
+
+    <div class="section">
+      <h2>📦 Token 測試</h2>
+      <form action="/profile" method="get">
+        <input
+          type="text"
+          name="token"
+          placeholder="貼上 Bearer token"
+          style="width: 300px"
+        />
+        <button type="submit">查詢個人資料</button>
+      </form>
+    </div>
+
+    <div class="section">
+      <h2>📘 技術說明</h2>
+      <pre>
+後端框架：Flask + PostgreSQL
+部署平台：Render (Server + DB)
+測試工具：Postman（支援批次測試、自動驗證）
+支援功能：註冊、登入、留言、上傳封面、分頁查詢、角色權限
+    </pre
+      >
+    </div>
+  </body>
+</html>
