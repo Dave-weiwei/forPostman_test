@@ -96,4 +96,5 @@ def create_book(current_user):
     return jsonify({"message": "請實作上傳封面與書籍資訊的邏輯"}), 501  # 留給你自己實作
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # 本地預設 5000，Render 用它指定的
+    app.run(debug=True, host="0.0.0.0", port=port)
