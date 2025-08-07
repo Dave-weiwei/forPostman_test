@@ -21,6 +21,7 @@
 
 ## 📁 專案結構
 
+```bash
 📁 Postman_test/
 ├── app.py # Flask API 主程式
 ├── requirements.txt # 套件需求列表
@@ -29,6 +30,7 @@
 ├── tests/ # Postman 測試資源
 │ ├── postman_collection.json # Postman 測試流程
 │ └── postman_environment.json # 測試用環境變數（baseURL、帳密等）
+```
 
 ---
 
