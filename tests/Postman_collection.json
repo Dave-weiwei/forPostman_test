@@ -1,0 +1,916 @@
+{
+	"info": {
+		"_postman_id": "a50c6a3d-8cff-4149-8c42-449f602b317a",
+		"name": "Postman_pratice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47064981",
+		"_collection_link": "https://aviation-geologist-43525259-2153985.postman.co/workspace/Weiii's-Workspace~44f5e608-7e46-4111-895f-35021b0fbe6b/collection/47064981-a50c6a3d-8cff-4149-8c42-449f602b317a?action=share&source=collection_link&creator=47064981"
+	},
+	"item": [
+		{
+			"name": "上傳封面(失敗:權限不足.無登入)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`回傳 403`, () => {\r",
+							"  pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 error\", () => {\r",
+							"  pm.expect(res).to.have.property(\"error\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"訊息應為 缺少授權 token\", () => {\r",
+							"  pm.expect(res.error).to.eql(\"缺少授權 token\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/books",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取得會員資料(無登入)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`回傳 401`, () => {\r",
+							"  pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 error\", () => {\r",
+							"  pm.expect(res).to.have.property(\"error\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"訊息應為 缺少授權 token\", () => {\r",
+							"  pm.expect(res.error).to.eql(\"缺少授權 token\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/profile",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "註冊成功",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"回傳 409\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 message\", () => {\r",
+							"  pm.expect(res).to.have.property(\"message\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"訊息應為 註冊成功\", () => {\r",
+							"  pm.expect(res.message).to.eql(\"註冊成功\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"davetest2\",\r\n    \"password\": \"davetest2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/register",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "註冊帳號空白",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`帳號：${pm.environment.get(\"current_user\")} → 回傳 400`, () => {\r",
+							"  pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 error\", () => {\r",
+							"  pm.expect(res).to.have.property(\"error\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"訊息應為 帳號密碼不可為空\", () => {\r",
+							"  pm.expect(res.error).to.eql(\"帳號密碼不可為空\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"if (!pm.environment.get(\"index\")) {\r",
+							"  const testData = [\r",
+							"    { \"username\": \"plainaddress\", \"password\": \"Test123\" },                // 沒有 @\r",
+							"    { \"username\": \"@missinglocal.com\", \"password\": \"Test123\" },          // 沒有 local-part\r",
+							"    { \"username\": \"missingdomain@\", \"password\": \"Test123\" },             // 沒有 domain\r",
+							"    { \"username\": \"missingdot@test\", \"password\": \"Test123\" },            // 沒有 dot\r",
+							"    { \"username\": \"two@@test.com\", \"password\": \"Test123\" },              // 有兩個 @\r",
+							"    { \"username\": \"test@.com\", \"password\": \"Test123\" },                  // domain 開頭是 dot\r",
+							"    { \"username\": \"test@com.\", \"password\": \"Test123\" }                   // domain 結尾是 dot\r",
+							"  ];\r",
+							"  pm.environment.set(\"testData\", JSON.stringify(testData));\r",
+							"  pm.environment.set(\"index\", \"0\");\r",
+							"}\r",
+							"\r",
+							"let index = parseInt(pm.environment.get(\"index\"));\r",
+							"let testData = JSON.parse(pm.environment.get(\"testData\"));\r",
+							"\r",
+							"if (index < testData.length) {\r",
+							"  pm.environment.set(\"current_user\", testData[index].username);\r",
+							"  pm.environment.set(\"current_pwd\", testData[index].password);\r",
+							"} else {\r",
+							"  postman.setNextRequest(null); // 結束\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"\",\r\n    \"password\": \"davetest\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/register",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "註冊密碼空白",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`帳號：${pm.environment.get(\"current_user\")} → 回傳 400`, () => {\r",
+							"  pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 error\", () => {\r",
+							"  pm.expect(res).to.have.property(\"error\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"訊息應為 帳號密碼不可為空\", () => {\r",
+							"  pm.expect(res.error).to.eql(\"帳號密碼不可為空\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"if (!pm.environment.get(\"index\")) {\r",
+							"  const testData = [\r",
+							"    { \"username\": \"plainaddress\", \"password\": \"Test123\" },                // 沒有 @\r",
+							"    { \"username\": \"@missinglocal.com\", \"password\": \"Test123\" },          // 沒有 local-part\r",
+							"    { \"username\": \"missingdomain@\", \"password\": \"Test123\" },             // 沒有 domain\r",
+							"    { \"username\": \"missingdot@test\", \"password\": \"Test123\" },            // 沒有 dot\r",
+							"    { \"username\": \"two@@test.com\", \"password\": \"Test123\" },              // 有兩個 @\r",
+							"    { \"username\": \"test@.com\", \"password\": \"Test123\" },                  // domain 開頭是 dot\r",
+							"    { \"username\": \"test@com.\", \"password\": \"Test123\" }                   // domain 結尾是 dot\r",
+							"  ];\r",
+							"  pm.environment.set(\"testData\", JSON.stringify(testData));\r",
+							"  pm.environment.set(\"index\", \"0\");\r",
+							"}\r",
+							"\r",
+							"let index = parseInt(pm.environment.get(\"index\"));\r",
+							"let testData = JSON.parse(pm.environment.get(\"testData\"));\r",
+							"\r",
+							"if (index < testData.length) {\r",
+							"  pm.environment.set(\"current_user\", testData[index].username);\r",
+							"  pm.environment.set(\"current_pwd\", testData[index].password);\r",
+							"} else {\r",
+							"  postman.setNextRequest(null); // 結束\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"davetest\",\r\n    \"password\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/register",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "註冊帳號重複",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`帳號：${pm.environment.get(\"current_user\")} → 回傳 409`, () => {\r",
+							"  pm.response.to.have.status(409);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 error\", () => {\r",
+							"  pm.expect(res).to.have.property(\"error\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"訊息應為 帳號已存在\", () => {\r",
+							"  pm.expect(res.error).to.eql(\"帳號已存在\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"if (!pm.environment.get(\"index\")) {\r",
+							"  const testData = [\r",
+							"    { \"username\": \"plainaddress\", \"password\": \"Test123\" },                // 沒有 @\r",
+							"    { \"username\": \"@missinglocal.com\", \"password\": \"Test123\" },          // 沒有 local-part\r",
+							"    { \"username\": \"missingdomain@\", \"password\": \"Test123\" },             // 沒有 domain\r",
+							"    { \"username\": \"missingdot@test\", \"password\": \"Test123\" },            // 沒有 dot\r",
+							"    { \"username\": \"two@@test.com\", \"password\": \"Test123\" },              // 有兩個 @\r",
+							"    { \"username\": \"test@.com\", \"password\": \"Test123\" },                  // domain 開頭是 dot\r",
+							"    { \"username\": \"test@com.\", \"password\": \"Test123\" }                   // domain 結尾是 dot\r",
+							"  ];\r",
+							"  pm.environment.set(\"testData\", JSON.stringify(testData));\r",
+							"  pm.environment.set(\"index\", \"0\");\r",
+							"}\r",
+							"\r",
+							"let index = parseInt(pm.environment.get(\"index\"));\r",
+							"let testData = JSON.parse(pm.environment.get(\"testData\"));\r",
+							"\r",
+							"if (index < testData.length) {\r",
+							"  pm.environment.set(\"current_user\", testData[index].username);\r",
+							"  pm.environment.set(\"current_pwd\", testData[index].password);\r",
+							"} else {\r",
+							"  postman.setNextRequest(null); // 結束\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"davetest2\",\r\n    \"password\": \"davetest2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/register",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "登入失敗",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`帳號：${pm.environment.get(\"current_user\")} → 回傳 401`, () => {\r",
+							"  pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 error\", () => {\r",
+							"  pm.expect(res).to.have.property(\"error\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"訊息應為 帳號或密碼錯誤\", () => {\r",
+							"  pm.expect(res.error).to.eql(\"帳號或密碼錯誤\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"davetestasd\",\r\n    \"password\": \"davetest\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取得會員資料(一般使用者)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const username = pm.environment.get(\"username\");\r",
+							"const password = pm.environment.get(\"password\");\r",
+							"const baseUrl = pm.environment.get(\"base_url\");\r",
+							"\r",
+							"// 2. 發送 POST /login 請求\r",
+							"pm.sendRequest({\r",
+							"    url: `${baseUrl}/login`,\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'raw',\r",
+							"        raw: JSON.stringify({\r",
+							"            username: username,\r",
+							"            password: password\r",
+							"        })\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    // 3. 處理結果：有錯就輸出錯誤\r",
+							"    if (err) {\r",
+							"        console.log(\"登入失敗:\", err);\r",
+							"    } else {\r",
+							"        // 4. 登入成功就從 response 中取得 token\r",
+							"        const json = res.json();\r",
+							"        pm.environment.set(\"token\", json.token); // 儲存 token 進環境變數\r",
+							"        console.log(\"登入成功, 取得 token:\", json.token);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`回傳 200`, () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 username,role\", () => {\r",
+							"  pm.expect(res).to.have.property(\"username\");\r",
+							"  pm.expect(res).to.have.property(\"role\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"應回傳登入者帳號與角色\", () => {\r",
+							"  pm.expect(res).to.have.property(\"username\", pm.environment.get(\"username\"));\r",
+							"  pm.expect(res).to.have.property(\"role\", \"user\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/profile",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取得會員資料(管理員)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`回傳 200`, () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 username,role\", () => {\r",
+							"  pm.expect(res).to.have.property(\"username\");\r",
+							"  pm.expect(res).to.have.property(\"role\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"應回傳登入者帳號與角色\", () => {\r",
+							"  pm.expect(res).to.have.property(\"username\", pm.environment.get(\"username_admin\"));\r",
+							"  pm.expect(res).to.have.property(\"role\", \"admin\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const username = pm.environment.get(\"username_admin\");\r",
+							"const password = pm.environment.get(\"password_admin\");\r",
+							"const baseUrl = pm.environment.get(\"base_url\");\r",
+							"\r",
+							"// 2. 發送 POST /login 請求\r",
+							"pm.sendRequest({\r",
+							"    url: `${baseUrl}/login`,\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'raw',\r",
+							"        raw: JSON.stringify({\r",
+							"            username: username,\r",
+							"            password: password\r",
+							"        })\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    // 3. 處理結果：有錯就輸出錯誤\r",
+							"    if (err) {\r",
+							"        console.log(\"登入失敗:\", err);\r",
+							"    } else {\r",
+							"        // 4. 登入成功就從 response 中取得 token\r",
+							"        const json = res.json();\r",
+							"        pm.environment.set(\"token\", json.token); // 儲存 token 進環境變數\r",
+							"        console.log(\"登入成功, 取得 token:\", json.token);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/profile",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查詢書籍",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`回傳 200`, () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 data 與 pagination\", () => {\r",
+							"  pm.expect(res).to.have.property(\"data\");\r",
+							"  pm.expect(res).to.have.property(\"pagination\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"pagination 應包含 page, limit, total\", () => {\r",
+							"  pm.expect(res.pagination).to.have.property(\"page\");\r",
+							"  pm.expect(res.pagination).to.have.property(\"limit\");\r",
+							"  pm.expect(res.pagination).to.have.property(\"total\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/books?page=6&limit=8",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "6"
+						},
+						{
+							"key": "limit",
+							"value": "8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "上傳封面(失敗:權限不足.一般會員)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`回傳 403`, () => {\r",
+							"  pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 error\", () => {\r",
+							"  pm.expect(res).to.have.property(\"error\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"訊息應為 只有管理員可新增書籍\", () => {\r",
+							"  pm.expect(res.error).to.eql(\"只有管理員可新增書籍\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const username = pm.environment.get(\"username\");\r",
+							"const password = pm.environment.get(\"password\");\r",
+							"const baseUrl = pm.environment.get(\"base_url\");\r",
+							"\r",
+							"// 2. 發送 POST /login 請求\r",
+							"pm.sendRequest({\r",
+							"    url: `${baseUrl}/login`,\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'raw',\r",
+							"        raw: JSON.stringify({\r",
+							"            username: username,\r",
+							"            password: password\r",
+							"        })\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    // 3. 處理結果：有錯就輸出錯誤\r",
+							"    if (err) {\r",
+							"        console.log(\"登入失敗:\", err);\r",
+							"    } else {\r",
+							"        // 4. 登入成功就從 response 中取得 token\r",
+							"        const json = res.json();\r",
+							"        pm.environment.set(\"token\", json.token); // 儲存 token 進環境變數\r",
+							"        console.log(\"登入成功, 取得 token:\", json.token);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/books",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "上傳封面",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(`回傳 501`, () => {\r",
+							"  pm.response.to.have.status(501);\r",
+							"});\r",
+							"\r",
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"應包含欄位 message\", () => {\r",
+							"  pm.expect(res).to.have.property(\"message\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"訊息應為 請實作上傳封面與書籍資訊的邏輯\", () => {\r",
+							"  pm.expect(res.message).to.eql(\"請實作上傳封面與書籍資訊的邏輯\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const username = pm.environment.get(\"username_admin\");\r",
+							"const password = pm.environment.get(\"password_admin\");\r",
+							"const baseUrl = pm.environment.get(\"base_url\");\r",
+							"\r",
+							"// 2. 發送 POST /login 請求\r",
+							"pm.sendRequest({\r",
+							"    url: `${baseUrl}/login`,\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'raw',\r",
+							"        raw: JSON.stringify({\r",
+							"            username: username,\r",
+							"            password: password\r",
+							"        })\r",
+							"    }\r",
+							"}, function (err, res) {\r",
+							"    // 3. 處理結果：有錯就輸出錯誤\r",
+							"    if (err) {\r",
+							"        console.log(\"登入失敗:\", err);\r",
+							"    } else {\r",
+							"        // 4. 登入成功就從 response 中取得 token\r",
+							"        const json = res.json();\r",
+							"        pm.environment.set(\"token\", json.token); // 儲存 token 進環境變數\r",
+							"        console.log(\"登入成功, 取得 token:\", json.token);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/books",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://forpostman-test.onrender.com",
+			"type": "default"
+		}
+	]
+}
