@@ -22,7 +22,7 @@ jobs:
         env:
           PORT: 5000
         run: |
-          python app.py &            # 背景啟動
+          python app.py & 
           echo $! > flask.pid
 
       - name: Wait for server
@@ -41,11 +41,7 @@ jobs:
 
       - name: Run Postman collection against localhost
         run: |
-          # 依你變數名稱擇一覆蓋 base URL
-          newman run tests/postman_collection.json \
-            --env-var base_url=http://127.0.0.1:5000 || \
-          newman run tests/postman_collection.json \
-            --env-var baseURL=http://127.0.0.1:5000
+          newman run tests/Postman_collection.json -e tests/Postman_environment.json --env-var base_url=http://127.0.0.1:5000; then
 
       - name: Stop Flask
         if: always()
